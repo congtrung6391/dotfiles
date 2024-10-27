@@ -7,6 +7,10 @@ api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 g.mapleader = " "
 g.maplocalleader = " "
 
+opt.ignorecase = true -- search case insensitive
+opt.smartcase = true -- search matters if capital letter
+opt.inccommand = "split" -- "for incsearch while sub
+
 opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2

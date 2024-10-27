@@ -1,15 +1,9 @@
 return {
   "folke/which-key.nvim",
+  tag = 'v2.1.0',
   config = function()
     local whichkey = require "which-key"
     local utils = require "utils"
-
-    local conf = {
-      window = {
-        border = "double", -- none, single, double, shadow
-        position = "bottom", -- bottom, top
-      },
-    }
 
     local opts = {
       mode = "n", -- Normal mode
@@ -57,12 +51,7 @@ return {
         e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
         p = { "<cmd>Telescope projects<cr>", "Projects" },
         s = { "<cmd>Telescope grep_string<cr>", "Grep String" },
-        r = { "<cmd>Spectre<cr>", "Replace in files (Spectre)" },
-
-      },
-
-      x = {
-        name = "Trouble",
+        r = { "<cmd>Spectre<cr>", "Replace in file" },
       },
 
       g = {
@@ -99,14 +88,18 @@ return {
         elseif ft == "typescript" or ft == "typescriptreact" or ft == "javascript" or ft == "javascriptreact" then
           keymap_c = {
             name = "Code",
-            -- o = { "<cmd>TypescriptOrganizeImports<cr>", "Organize Imports" },
-            r = { "<cmd>TypescriptRenameFile<cr>", "Rename File" },
             i = { "<cmd>TypescriptAddMissingImports<cr>", "Import Missing" },
             F = { "<cmd>EslintFixAll<cr>", "Fix All Eslint Error" },
             u = { "<cmd>TypescriptRemoveUnused<cr>", "Remove Unused" },
-            -- R = { "<cmd>lua require('config.test').javascript_runner()<cr>", "Choose Test Runner" },
-            -- s = { "<cmd>2TermExec cmd='yarn start'<cr>", "Yarn Start" },
-            -- t = { "<cmd>2TermExec cmd='yarn test'<cr>", "Yarn Test" },
+            s = { "<cmd>2TermExec cmd='yarn start'<cr>", "Yarn Start" },
+            t = { "<cmd>2TermExec cmd='yarn test'<cr>", "Yarn Test" },
+            l = { "<cmd>2TermExec cmd='yarn lint --fix'<cr>", "Yarn lint" },
+          }
+        elseif ft == "rust" then
+          keymap_c = {
+            name = "Code",
+            r = { "<cmd>2TermExec cmd='cargo run'<cr>", "Cargo run" },  
+            b = { "<cmd>2TermExec cmd='cargo build'<cr>", "Cargo build" },  
           }
         end
 
@@ -133,7 +126,7 @@ return {
       end
     end
 
-    whichkey.setup(conf)
+    whichkey.setup()
     whichkey.register(mappings, opts)
 
     code_keymap()
