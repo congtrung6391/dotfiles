@@ -1,10 +1,25 @@
 local M = {}
 
+local prettier = {
+  formatCommand = 'prettierd "${INPUT}"',
+  formatStdin = true,
+}
+
+local rubocop = {
+  lintCommand = "bundle exec rubocop --format emacs --force-exclusion",
+  lintIgnoreExitCode = true,
+  lintStdin = true,
+  lintFormats = { "%f:%l:%c: %t: %m" },
+  formatCommand =
+  'bundle exec rubocop --auto-correct --force-exclusion --stdin {} 2>/dev/null | sed "1,/^====================$/d"',
+  formatStdin = true,
+}
+
 function M.setup()
   local lspconfig = require "lspconfig"
   local lsp_status = require "lsp-status"
   local configCapabilities = require('cmp_nvim_lsp').default_capabilities()
-  
+
   require("luasnip.loaders.from_vscode").lazy_load()
 
   lsp_status.register_progress()
@@ -12,38 +27,38 @@ function M.setup()
   local capabilities = vim.tbl_extend('keep', configCapabilities or {}, lsp_status.capabilities)
 
   local on_attach = function(client, bufnr)
-  lsp_status.on_attach(client)
+    lsp_status.on_attach(client)
 
-  local opts = { buffer = bufnr, noremap = true, silent = true }
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    local opts = { buffer = bufnr, noremap = true, silent = true }
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 
-  local whichkey = require "which-key"
+    local whichkey = require "which-key"
 
-  local keymap_c = {
-    c = {
-      R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+    local keymap_c = {
+      c = {
+        R = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+      }
+    };
+
+    if client.server_capabilities.documentFormattingProvider then
+      keymap_c.c.f = { "<cmd>lua vim.lsp.buf.format({async = true})<CR>", "Format Document" }
+    end
+
+    local o = { buffer = bufnr, prefix = "<leader>" }
+    whichkey.register(keymap_c, o)
+
+    local keymap_g = {
+      name = "Goto",
+      d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+      D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+      h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
+      i = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
+      t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
+      r = { "<cmd>lua vim.lsp.buf.references()<CR>", "References" },
     }
-  };
 
-  if client.server_capabilities.documentFormattingProvider then
-    keymap_c.c.f = { "<cmd>lua vim.lsp.buf.format({async = true})<CR>", "Format Document" }
-  end
-
-  local o = { buffer = bufnr, prefix = "<leader>" }
-  whichkey.register(keymap_c, o)
-
-  local keymap_g = {
-    name = "Goto",
-    d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
-    D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
-    h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-    i = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
-    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
-    r = { "<cmd>lua vim.lsp.buf.references()<CR>", "References" },
-  }
-
-  o = { buffer = bufnr, prefix = "g" }
-  whichkey.register(keymap_g, o)
+    o = { buffer = bufnr, prefix = "g" }
+    whichkey.register(keymap_g, o)
   end
 
   lspconfig.lua_ls.setup {
@@ -79,7 +94,7 @@ function M.setup()
       client.server_capabilities.documentFormattingRangeProvider = false
     end,
   }
-  lspconfig.rubocop.setup{
+  lspconfig.rubocop.setup {
     on_attach = function(client, bufnr)
       vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = bufnr,
@@ -87,9 +102,32 @@ function M.setup()
       })
     end,
   }
-  lspconfig.ruby_lsp.setup{
+  lspconfig.ruby_lsp.setup {
     capabilities = capabilities,
     on_attach = on_attach
+  }
+
+  lspconfig.efm.setup {
+    root_dir = lspconfig.util.root_pattern("package.json", "Gemfile"),
+    init_options = { documentFormatting = true, codeAction = false },
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown" },
+    settings = {
+      languages = {
+        javascript = { prettier },
+        javascriptreact = { prettier },
+        typescript = { prettier },
+        typescriptreact = { prettier },
+        json = { prettier },
+        ruby = { rubocop },
+      },
+    },
+
+    on_attach = function(client, bufnr)
+      client.server_capabilities.definitionProvider = false
+      client.server_capabilities.documentFormattingProvider = true
+      client.server_capabilities.documentFormattingRangeProvider = true
+    end,
+    flags = { debounce_text_changes = 150 },
   }
 end
 
