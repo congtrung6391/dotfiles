@@ -16,6 +16,7 @@ opt.softtabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
+opt.autoindent = true
 opt.termguicolors = true -- Enable colors in terminal
 opt.hlsearch = true --Set highlight on search
 opt.number = true --Make line numbers default

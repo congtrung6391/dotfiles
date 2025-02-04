@@ -6,10 +6,10 @@ return {
     local utils = require "utils"
 
     local opts = {
-      mode = "n", -- Normal mode
+      mode = "n",     -- Normal mode
       prefix = "<leader>",
-      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-      silent = true, -- use `silent` when creating keymaps
+      buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
+      silent = true,  -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
       nowait = false, -- use `nowait` when creating keymaps
     }
@@ -77,7 +77,7 @@ return {
         local bufnr = vim.api.nvim_get_current_buf()
         local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
         local fname = vim.fn.expand "%:p:t"
-        local keymap_c = {} -- normal key map
+        local keymap_c = {}   -- normal key map
         local keymap_c_v = {} -- visual key map
 
         if ft == "lua" then
@@ -88,9 +88,9 @@ return {
         elseif ft == "typescript" or ft == "typescriptreact" or ft == "javascript" or ft == "javascriptreact" then
           keymap_c = {
             name = "Code",
-            i = { "<cmd>TypescriptAddMissingImports<cr>", "Import Missing" },
+            i = { "<cmd>TSToolsAddMissingImports<cr>", "Import Missing" },
             F = { "<cmd>EslintFixAll<cr>", "Fix All Eslint Error" },
-            u = { "<cmd>TypescriptRemoveUnused<cr>", "Remove Unused" },
+            u = { "<cmd>TSToolsRemoveUnused<cr>", "Remove Unused" },
             s = { "<cmd>2TermExec cmd='yarn start'<cr>", "Yarn Start" },
             t = { "<cmd>2TermExec cmd='yarn test'<cr>", "Yarn Test" },
             l = { "<cmd>2TermExec cmd='yarn lint --fix'<cr>", "Yarn lint" },
@@ -98,8 +98,8 @@ return {
         elseif ft == "rust" then
           keymap_c = {
             name = "Code",
-            r = { "<cmd>2TermExec cmd='cargo run'<cr>", "Cargo run" },  
-            b = { "<cmd>2TermExec cmd='cargo build'<cr>", "Cargo build" },  
+            r = { "<cmd>2TermExec cmd='cargo run'<cr>", "Cargo run" },
+            b = { "<cmd>2TermExec cmd='cargo build'<cr>", "Cargo build" },
           }
         end
 

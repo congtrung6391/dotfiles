@@ -39,9 +39,10 @@ return {
       },
       open_ai = {
         api_key = {
-          env = "OPENAI_API_KEY",
+          -- env = "NEOAI_TOKEN",
           get = function()
-              local key = vim.fn.system("pass show openai/mytestkey")
+              local key = vim.fn.system("echo $NEOAI_TOKEN")
+              print(key)
               key = string.gsub(key, "\n", "")
               return key
           end,

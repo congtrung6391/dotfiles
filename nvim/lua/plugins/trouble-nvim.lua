@@ -1,7 +1,8 @@
 return {
   "folke/trouble.nvim",
+  version = "v3.0.0",
   cmd = { "TroubleToggle", "Trouble" },
-  opts = { use_diagnostic_signs = true },
+  opts = {},
   keys = {
     {
       "<leader>xx",
