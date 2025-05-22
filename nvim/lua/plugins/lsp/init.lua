@@ -32,8 +32,8 @@ return {
     config = function()
       require("typescript-tools").setup {
         settings = {
+          separate_diagnostic_server = false,
           tsserver_file_preferences = function(ft)
-            -- Some "ifology" using `ft` of opened file
             return {
               includeInlayParameterNameHints = "all",
               includeCompletionsForModuleExports = true,
@@ -41,7 +41,6 @@ return {
             }
           end,
           tsserver_format_options = function(ft)
-            -- Some "ifology" using `ft` of opened file
             return {
               allowIncompleteCompletions = false,
               allowRenameOfImportPath = false,
@@ -49,6 +48,60 @@ return {
           end
         },
       }
+
+      local whichkey = require "which-key"
+
+      local keymap_c = {
+        c = {
+          i = { "<cmd>TSToolsAddMissingImports<CR>", "add missing import" },
+          I = { "<cmd>TSToolsOrganizeImports<CR>", "organise imports" },
+          u = { "<cmd>TSToolsRemoveUnusedImports<CR>", "remove all unsued imports" },
+          U = { "<cmd>TSToolsRemoveUnused<CR>", "remove all unsued statements" },
+          f = { "<cmd>lua vim.lsp.buf.format({async = true})<CR>", "Format Document" },
+          r = { "<cmd>TSToolsFileReferences<CR>", "reference file" },
+          R = { "<cmd>TSToolsRenameFile<CR>", "Rename file" },
+        }
+      };
+
+      local o = { buffer = bufnr, prefix = "<leader>" }
+      whichkey.register(keymap_c, o)
+
+      local keymap_g = {
+        name = "Goto",
+        d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+        D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+        h = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
+        i = { "<cmd>Telescope lsp_implementations<CR>", "Goto Implementation" },
+        t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Goto Type Definition" },
+        r = { "<cmd>lua vim.lsp.buf.references()<CR>", "References" },
+      }
+
+      o = { buffer = bufnr, prefix = "g" }
+      whichkey.register(keymap_g, o)
     end
-  }
+  },
+  -- {
+  --   'mfussenegger/nvim-lint',
+  --   version = false,
+  --   event = "BufReadPre",
+  --   enabled = false,
+  --   config = function()
+  --     vim.env.ESLINT_D_PPID = vim.fn.getpid()
+  --     local lint = require('lint');
+  --
+  --     lint.linters.prettierd = {
+  --       cmd = "prettierd",
+  --       stdin = true,
+  --     }
+  --
+  --     require('lint').linters_by_ft = {
+  --       javascript = { 'eslint_d', 'prettierd' },
+  --       javascriptreact = { 'eslint_d', 'prettierd' },
+  --       typescript = { 'eslint_d', 'prettierd' },
+  --       typescriptreact = { 'eslint_d', 'prettierd' },
+  --       json = { 'prettierd' },
+  --
+  --     }
+  --   end
+  -- }
 }

@@ -1,5 +1,14 @@
 local M = {}
 
+local eslint = {
+  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+  lintStdin = true,
+  lintFormats = { "%f:%l:%c: %m" },
+  lintIgnoreExitCode = true,
+  formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+  formatStdin = true
+}
+
 local prettier = {
   formatCommand = 'prettierd "${INPUT}"',
   formatStdin = true,
@@ -71,22 +80,11 @@ function M.setup()
     on_attach = on_attach
   }
 
-  lspconfig.eslint.setup {
-    settings = {
-      packageManager = 'yarn'
-    },
-    on_attach = function(client, bufnr)
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        command = "EslintFixAll",
-      })
-    end,
-  }
-
-  lspconfig.ts_ls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach
-  }
+  -- replaced by typescript-tools
+  -- lspconfig.ts_ls.setup {
+  --   capabilities = capabilities,
+  --   on_attach = on_attach
+  -- }
 
   lspconfig.solargraph.setup {
     on_attach = function(client)
@@ -94,14 +92,7 @@ function M.setup()
       client.server_capabilities.documentFormattingRangeProvider = false
     end,
   }
-  lspconfig.rubocop.setup {
-    on_attach = function(client, bufnr)
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        command = "EslintFixAll",
-      })
-    end,
-  }
+
   lspconfig.ruby_lsp.setup {
     capabilities = capabilities,
     on_attach = on_attach
@@ -113,12 +104,13 @@ function M.setup()
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown" },
     settings = {
       languages = {
-        javascript = { prettier },
-        javascriptreact = { prettier },
-        typescript = { prettier },
-        typescriptreact = { prettier },
-        json = { prettier },
         ruby = { rubocop },
+        javascript = { prettier, eslint },
+        javascriptreact = { prettier, eslint },
+        ["javascript.jsx"] = { prettier, eslint },
+        typescript = { prettier, eslint },
+        ["typescript.tsx"] = { prettier, eslint },
+        typescriptreact = { prettier, eslint }
       },
     },
 

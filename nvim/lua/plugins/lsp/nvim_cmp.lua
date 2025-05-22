@@ -38,7 +38,7 @@ function M.setup()
           cmp.confirm({
             behavior = cmp.ConfirmBehavior.Insert,
             select = true
-          }) -- Confirm the selected item, or the first if none is selected
+          })         -- Confirm the selected item, or the first if none is selected
         else
           fallback() -- Insert a newline if no completion menu is visible
         end
