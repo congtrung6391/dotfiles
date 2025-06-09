@@ -6,6 +6,7 @@ local opt = vim.opt
 api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 g.mapleader = " "
 g.maplocalleader = " "
+g.markdown_recommended_style = 0
 
 opt.ignorecase = true -- search case insensitive
 opt.smartcase = true -- search matters if capital letter

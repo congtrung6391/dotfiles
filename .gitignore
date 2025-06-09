@@ -1,0 +1,7 @@
+*
+
+!.gitignore
+!nvim
+!alacritty
+!zellij
+!spaceship.zsh

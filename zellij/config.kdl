@@ -293,7 +293,7 @@ theme "molokai-dark"
 // The name of the default layout to load on startup
 // Default: "default"
 //
-default_layout "default"
+default_layout "compact"
 
 // Choose the mode that zellij uses when starting up.
 // Default: normal
@@ -344,7 +344,7 @@ copy_command "pbcopy"                     // osx
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
 //
-scrollback_editor "/opt/homebrew/bin/nvim"
+scrollback_editor "/opt/nvim-linux64/bin/nvim"
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)

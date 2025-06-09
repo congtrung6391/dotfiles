@@ -84,5 +84,7 @@ return {
         end
       end
     end
+
+    vim.treesitter.language.register("html", "hbs")
   end,
 }
