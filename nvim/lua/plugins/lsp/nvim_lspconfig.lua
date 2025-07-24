@@ -130,8 +130,7 @@ function M.setup()
   -- }
 
   lspconfig.efm.setup {
-    root_dir = lspconfig.util.root_pattern(".git", "package.json", '.eslintrc.js', '.eslintrc.json', "Gemfile"),
-    init_options = { documentFormatting = true, codeAction = false },
+    root_dir = lspconfig.util.root_pattern("package.json", "Gemfile"),
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown" },
     settings = {
       languages = {

@@ -38,7 +38,6 @@ return {
               cond = gps.is_available,
               color = { fg = "#f3ca28" },
             },
-            'lsp_progress',
           },
           lualine_x = {
             {
@@ -48,7 +47,14 @@ return {
             },
             'searchcount',
             'encoding',
-            'fileformat'
+            {
+              'fileformat',
+              symbols = {
+                unix = 'LF',
+                dos = 'CRLF',
+                mac = 'CR',
+              }
+            }
           },
           lualine_y = { 'progress' },
           lualine_z = { 'location' }
@@ -62,11 +68,14 @@ return {
           lualine_z = {}
         },
         tabline = {},
-        winbar = {},
+        winbar = {
+          lualine_y = {
+            'lsp_progress',
+          }
+        },
         inactive_winbar = {},
         extensions = {}
       }
     end,
   },
 }
-

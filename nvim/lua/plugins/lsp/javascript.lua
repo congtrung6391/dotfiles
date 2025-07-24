@@ -8,6 +8,7 @@ return {
       require("typescript-tools").setup {
         settings = {
           separate_diagnostic_server = false,
+          -- expose_as_code_action = "all",
           tsserver_file_preferences = function(ft)
             return {
               includeInlayParameterNameHints = "all",
