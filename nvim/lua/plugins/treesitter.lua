@@ -86,5 +86,6 @@ return {
     end
 
     vim.treesitter.language.register("html", "hbs")
+    vim.cmd("autocmd BufRead,BufNewFile *.hbs set filetype=html")
   end,
 }

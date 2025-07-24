@@ -80,12 +80,6 @@ function M.setup()
     on_attach = on_attach
   }
 
-  -- replaced by typescript-tools
-  -- lspconfig.ts_ls.setup {
-  --   capabilities = capabilities,
-  --   on_attach = on_attach
-  -- }
-
   lspconfig.solargraph.setup {
     on_attach = function(client)
       client.server_capabilities.documentFormattingProvider = false
@@ -101,7 +95,7 @@ function M.setup()
   lspconfig.efm.setup {
     root_dir = lspconfig.util.root_pattern("package.json", "Gemfile"),
     init_options = { documentFormatting = true, codeAction = false },
-    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown" },
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown", "html", "hbs" },
     settings = {
       languages = {
         ruby = { rubocop },
@@ -114,10 +108,12 @@ function M.setup()
       },
     },
 
+    capabilities = capabilities,
     on_attach = function(client, bufnr)
       client.server_capabilities.definitionProvider = false
       client.server_capabilities.documentFormattingProvider = true
       client.server_capabilities.documentFormattingRangeProvider = true
+      client.server_capabilities.codeActionProvider = true
     end,
     flags = { debounce_text_changes = 150 },
   }
