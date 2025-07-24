@@ -1,5 +1,6 @@
 return {
   "Bryley/neoai.nvim",
+  enabled = false,
   dependencies = {
     "MunifTanjim/nui.nvim",
   },
@@ -40,11 +41,17 @@ return {
       open_ai = {
         api_key = {
           env = "OPENAI_API_KEY",
-          get = function()
-              local key = vim.fn.system("pass show openai/mytestkey")
-              key = string.gsub(key, "\n", "")
-              return key
-          end,
+          value = "",
+          -- `get` is is a function that retrieves an API key, can be used to override the default method.
+          -- get = function() ... end
+
+          -- Here is some code for a function that retrieves an API key. You can use it with
+          -- the Linux 'pass' application.
+          -- get = function()
+          --     local key = vim.fn.system("pass show openai/mytestkey")
+          --     key = string.gsub(key, "\n", "")
+          --     return key
+          -- end,
         },
       },
       register_output = {
