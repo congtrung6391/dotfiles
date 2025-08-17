@@ -10,7 +10,7 @@ return {
         panel = { enabled = false },
       })
     end,
-    enabled = true,
+    enabled = false,
   },
   {
     "zbirenbaum/copilot-cmp",
