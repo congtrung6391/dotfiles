@@ -43,7 +43,9 @@ return {
     'williamboman/mason.nvim',
     event = 'VeryLazy',
     config = function()
-      require('mason').setup()
+      require('mason').setup {
+        ensure_installed = { "goimports", "gofumpt", "gomodifytags", "impl", 'delve' }
+      }
     end,
   },
 
@@ -81,7 +83,8 @@ return {
         "microsoft/vscode-js-debug",
         tag = "v1.74.1",
         build = "npm i --legacy-peer-deps && npm run compile vsDebugServerBundle && mv dist out"
-      }
+      },
+      { "leoluz/nvim-dap-go" }
     },
     event = "VeryLazy",
     keys = {
@@ -126,7 +129,7 @@ return {
           {
             type = "pwa-node",
             request = "launch",
-            name = "Debug Jest Tests",
+            name = "Debug Jest Tests (directly)",
             -- trace = true, -- include debugger info
             runtimeExecutable = "node",
             runtimeArgs = {
@@ -136,6 +139,34 @@ return {
             },
             rootPath = "${workspaceFolder}",
             cwd = "${workspaceFolder}",
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+          },
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Debug Yarn test",
+            runtimeExecutable = "yarn",
+            runtimeArgs = {
+              "test",
+              "${file}",
+            },
+            rootPath = "${workspaceFolder}",
+            cwd = "${workspaceFolder}",
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+          },
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Debug Yarn test (monorepo)",
+            runtimeExecutable = "yarn",
+            runtimeArgs = {
+              "test",
+              "${file}",
+            },
+            rootPath = "${workspaceFolder}/../..",
+            cwd = "${workspaceFolder}/../..",
             console = "integratedTerminal",
             internalConsoleOptions = "neverOpen",
           }

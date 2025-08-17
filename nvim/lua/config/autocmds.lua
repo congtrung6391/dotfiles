@@ -111,6 +111,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
 vim.cmd([[
   augroup autosave
     autocmd!
-    autocmd InsertLeave * update
+    autocmd InsertLeave * if !&buftype && getbufinfo('%')[0].name != '' | update | endif
   augroup END
 ]])
