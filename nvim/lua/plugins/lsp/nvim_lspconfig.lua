@@ -162,24 +162,6 @@ function M.setup()
     end,
   }
 
-  -- lspconfig.ruby_lsp.setup {
-  --   filetypes = { 'ruby' },
-  --   init_options = {
-  --     formatter = 'standard',
-  --     linters = { 'standard' },
-  --   },
-  --   settings = {
-  --     solargraph = {
-  --       diagnostics = true,     -- Enable diagnostics
-  --       formatting = true,
-  --     },
-  --   },
-  --   capabilities = capabilities,
-  --   on_attach = function(client)
-  --     on_attach(client, bufrn)
-  --   end,
-  -- }
-
   lspconfig.efm.setup {
     root_dir = lspconfig.util.root_pattern("package.json", "Gemfile"),
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown" },

@@ -6,10 +6,10 @@ return {
     local whichkey = require "which-key"
 
     local opts = {
-      mode = "n", -- Normal mode
+      mode = "n",     -- Normal mode
       prefix = "<leader>",
-      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-      silent = true, -- use `silent` when creating keymaps
+      buffer = nil,   -- Global mappings. Specify a buffer number for buffer local mappings
+      silent = true,  -- use `silent` when creating keymaps
       noremap = true, -- use `noremap` when creating keymaps
       nowait = false, -- use `nowait` when creating keymaps
     }
@@ -22,8 +22,6 @@ return {
 
       a = {
         name = "AI - CodeCompanian",
-        a = { "<cmd>CodeCompanionActions<CR>", "Actions Palette" },
-        t = { "<cmd>CodeCompanionChat Toggle<CR>", "Toggle Chat" },
       },
 
       b = {
@@ -68,6 +66,33 @@ return {
         },
         z = { "<cmd>lua require('utils.term').git_client_toggle()<CR>", "LazyGit" },
       },
+      u = {
+        name = "Upload / Download",
+        icon = "",
+        d = {
+          "<cmd>TransferDownload<cr>", "Download from remote server (scp)",
+        },
+        f = {
+
+          "<cmd>DiffRemote<cr>",
+          "Diff file with remote server"
+        },
+        i = {
+          "<cmd>TransferInit<cr>",
+          "Init/Edit Deployment config"
+        },
+        r = {
+
+          "<cmd>TransferRepeat<cr>",
+          "Repear transfer command"
+        },
+
+        u = {
+
+          "<cmd>TransferUpload<cr>",
+          "Upload to remote server (scp)"
+        }
+      }
     }
 
     local function code_keymap()
@@ -103,8 +128,8 @@ return {
       --   elseif ft == "rust" then
       --     keymap_c = {
       --       name = "Code",
-      --       r = { "<cmd>2TermExec cmd='cargo run'<cr>", "Cargo run" },  
-      --       b = { "<cmd>2TermExec cmd='cargo build'<cr>", "Cargo build" },  
+      --       r = { "<cmd>2TermExec cmd='cargo run'<cr>", "Cargo run" },
+      --       b = { "<cmd>2TermExec cmd='cargo build'<cr>", "Cargo build" },
       --     }
       --   end
       --
