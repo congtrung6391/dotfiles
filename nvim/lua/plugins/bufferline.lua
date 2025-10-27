@@ -3,7 +3,7 @@ return {
   dependencies = { "echasnovski/mini.nvim" },
   event = "VeryLazy",
   keys = {
-    { "<leader>bd", "<Cmd>bd!<Cr>", desc = "Delete buffer" },
+    { "<leader>bd", "<Cmd>bp|sp|bn|bd<Cr>", desc = "Delete buffer" },
     { "<leader>bo", "<Cmd>%bd|e#|bd#<Cr>", desc = "Delete all other buffers" },
     { "<leader>bn", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
     { "<leader>bp", "<Cmd>BufferLineCyclePrev<CR>", desc = "Previous buffer" },

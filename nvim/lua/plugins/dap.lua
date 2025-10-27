@@ -44,7 +44,7 @@ return {
     event = 'VeryLazy',
     config = function()
       require('mason').setup {
-        ensure_installed = { "goimports", "gofumpt", "gomodifytags", "impl", 'delve' }
+        ensure_installed = { "goimports", "golsp", "gofumpt", "gomodifytags", "impl", 'delve' }
       }
     end,
   },
