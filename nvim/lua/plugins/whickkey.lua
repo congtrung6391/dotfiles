@@ -79,6 +79,8 @@ return {
         v = { "<cmd>vs<CR>", "Split vertical window" },
         h = { "<C-w>h", "Left" },
         l = { "<C-w>l", "Right" },
+        j = { "<C-w>j", "Up" },
+        k = { "<C-w>k", "Down" },
       }
     }
 

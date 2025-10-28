@@ -6,11 +6,6 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
--- Helper function to feed terminal keys
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
 function M.setup()
   local cmp = require "cmp"
 
@@ -18,16 +13,15 @@ function M.setup()
   --   paths = { '/snippets' }
   -- })
 
-  cmp.setup {
+  cmp.setup({
     preselect = "item",
     snippet = {
       expand = function(args)
         require('luasnip').lsp_expand(args.body)
       end,
     },
-    preselect = "item",
     sources = cmp.config.sources {
-      { name = "copilot",  priority = 1 },
+      -- { name = "copilot",  priority = 1 },
       { name = "nvim_lsp", priority = 2 },
       { name = "path",     priority = 3 },
       { name = "buffer",   priority = 4 },
@@ -35,6 +29,9 @@ function M.setup()
     completion = {
       autocomplete = false,
       completeopt = "menu,menuone,noinsert",
+    },
+    experimental = {
+      ghost_text = true
     },
     mapping = {
       ['<CR>'] = cmp.mapping(function(fallback)
@@ -84,7 +81,7 @@ function M.setup()
     sorting = {
       priority_weight = 1.0,
       comparators = {
-        require("copilot_cmp.comparators").prioritize,
+        -- require("copilot_cmp.comparators").prioritize,
         cmp.config.compare.offset,
         cmp.config.compare.exact,
         cmp.config.compare.score,
@@ -106,7 +103,7 @@ function M.setup()
         cmp.config.compare.order,
       },
     }
-  }
+  })
 
   -- Use completion in command-line mode
   cmp.setup.cmdline('/', {

@@ -29,6 +29,8 @@ local rubocop = {
 }
 
 function M.setup()
+  vim.lsp.set_log_level("debug")
+
   vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticError' })
   vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticWarn' })
   vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticInfo' })
@@ -37,7 +39,7 @@ function M.setup()
   vim.diagnostic.config({
     signs = true,
     underline = true,
-    virtual_text = false, -- or configure as you like
+    virtual_text = true,
     update_in_insert = true,
     severity_sort = true,
   })
@@ -88,65 +90,74 @@ function M.setup()
   end
 
   lspconfig.lua_ls.setup {
+    filetypes = { 'lua' },
     capabilities = capabilities,
     on_attach = on_attach
   }
 
   lspconfig.rust_analyzer.setup {
+    filetypes = { 'rust' },
     capabilities = capabilities,
     on_attach = on_attach,
   }
 
-  lspconfig.gopls.setup {
-    capabilities = capabilities,
-    on_attach = function(client, bufnr)
-      if not client.server_capabilities.semanticTokensProvider then
-        local semantic = client.config.capabilities.textDocument.semanticTokens
-        client.server_capabilities.semanticTokensProvider = {
-          full = true,
-          legend = {
-            tokenTypes = semantic.tokenTypes,
-            tokenModifiers = semantic.tokenModifiers,
-          },
-          range = true,
-        }
-      end
-      on_attach(client, bufnr)
-    end,
-    settings = {
-      gofumpt = true,
-      codelenses = {
-        gc_details = false,
-        generate = true,
-        regenerate_cgo = true,
-        run_govulncheck = true,
-        test = true,
-        tidy = true,
-        upgrade_dependency = true,
-        vendor = true,
-      },
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
-        constantValues = true,
-        functionTypeParameters = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
-      },
-      analyses = {
-        nilness = true,
-        unusedparams = true,
-        unusedwrite = true,
-        useany = true,
-      },
-      usePlaceholders = true,
-      completeUnimported = true,
-      staticcheck = true,
-      directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-      semanticTokens = true,
-    },
-  }
+  -- lspconfig.gopls.setup {
+  --   capabilities = capabilities,
+  --   on_attach = function(client, bufnr)
+  --     if not client.server_capabilities.semanticTokensProvider then
+  --       local semantic = client.config.capabilities.textDocument.semanticTokens
+  --       client.server_capabilities.semanticTokensProvider = {
+  --         full = true,
+  --         legend = {
+  --           tokenTypes = semantic.tokenTypes,
+  --           tokenModifiers = semantic.tokenModifiers,
+  --         },
+  --         range = true,
+  --       }
+  --     end
+  --     on_attach(client, bufnr)
+  --   end,
+  --   cmd = { "gopls" },
+  --   filetypes = { "go", "gomod", "gowork", "gotmpl" },
+  --   root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+  --   settings = {
+  --     -- gopls = {
+  --     --   testFlags = { "-v", "-count=1" },
+  --     --   buildFlags = { "-tag=unit,integration,calcs_integration,transutil,transusecase,transaction_calculation" },
+  --     -- },
+  --     gofumpt = true,
+  --     codelenses = {
+  --       gc_details = false,
+  --       generate = true,
+  --       regenerate_cgo = true,
+  --       run_govulncheck = true,
+  --       test = true,
+  --       tidy = true,
+  --       upgrade_dependency = true,
+  --       vendor = true,
+  --     },
+  --     hints = {
+  --       assignVariableTypes = true,
+  --       compositeLiteralFields = true,
+  --       compositeLiteralTypes = true,
+  --       constantValues = true,
+  --       functionTypeParameters = true,
+  --       parameterNames = true,
+  --       rangeVariableTypes = true,
+  --     },
+  --     analyses = {
+  --       nilness = true,
+  --       unusedparams = true,
+  --       unusedwrite = true,
+  --       useany = true,
+  --     },
+  --     usePlaceholders = true,
+  --     completeUnimported = true,
+  --     staticcheck = true,
+  --     directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+  --     semanticTokens = true,
+  --   },
+  -- }
 
   lspconfig.solargraph.setup {
     filetypes = { 'ruby' },
@@ -162,26 +173,8 @@ function M.setup()
     end,
   }
 
-  -- lspconfig.ruby_lsp.setup {
-  --   filetypes = { 'ruby' },
-  --   init_options = {
-  --     formatter = 'standard',
-  --     linters = { 'standard' },
-  --   },
-  --   settings = {
-  --     solargraph = {
-  --       diagnostics = true,     -- Enable diagnostics
-  --       formatting = true,
-  --     },
-  --   },
-  --   capabilities = capabilities,
-  --   on_attach = function(client)
-  --     on_attach(client, bufrn)
-  --   end,
-  -- }
-
   lspconfig.efm.setup {
-    root_dir = lspconfig.util.root_pattern("package.json", "Gemfile"),
+    root_dir = lspconfig.util.root_pattern(".git", "Gemfile", "packages.json"),
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "ruby", "json", "markdown" },
     settings = {
       languages = {

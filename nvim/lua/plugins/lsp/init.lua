@@ -8,6 +8,10 @@ local goPlugins = require('plugins.lsp.go')
 return {
   -- { 'williamboman/mason.nvim' },
   -- { 'williamboman/mason-lspconfig.nvim' },
+  {
+    "mason-org/mason.nvim",
+    opts = { ensure_installed = { "goimports", "gofumpt", "gomodifytags", "impl", "golangci-lint", "delve" } },
+  },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'L3MON4D3/LuaSnip' },
   { "onsails/lspkind.nvim" },
@@ -15,7 +19,7 @@ return {
  
   {
     'hrsh7th/nvim-cmp',
-    version = false,
+    version = "v0.0.2",
     event = "BufReadPre",
     config = cmpSetup,
   },
@@ -23,7 +27,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     version = false,
-    dependencies = { "nvim-lua/lsp-status.nvim" },
+    dependencies = { "nvim-lua/lsp-status.nvim", "simrat39/inlay-hints.nvim" },
     event = "BufReadPre",
     config = lspconfigSetup,
   },
