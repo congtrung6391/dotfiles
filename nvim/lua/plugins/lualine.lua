@@ -32,12 +32,13 @@ return {
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff', 'diagnostics' },
           lualine_c = {
-            { 'filename', lsp_status.status },
+            { 'filename', path = 1, lsp_status.status },
             {
               gps.get_location,
               cond = gps.is_available,
               color = { fg = "#f3ca28" },
             },
+            { 'lsp_progress' }
           },
           lualine_x = {
             {
@@ -68,11 +69,11 @@ return {
           lualine_z = {}
         },
         tabline = {},
-        winbar = {
-          lualine_y = {
-            'lsp_progress',
-          }
-        },
+        -- winbar = {
+        --   lualine_y = {
+        --     'lsp_progress',
+        --   }
+        -- },
         inactive_winbar = {},
         extensions = {}
       }

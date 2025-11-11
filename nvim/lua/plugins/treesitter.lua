@@ -1,15 +1,12 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  version = "v0.9.3",
+  version = "v0.10.0",
   build = ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
   dependencies = {
     {
       "nvim-treesitter/nvim-treesitter-textobjects",
       init = function()
-        -- disable rtp plugin, as we only need its queries for mini.ai
-        -- In case other textobject modules are enabled, we will load them
-        -- once nvim-treesitter is loaded
         require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
         load_textobjects = true
       end,
@@ -45,8 +42,15 @@ return {
       "vim",
       "vimdoc",
       "yaml",
-      "go", "gomod", "gowork", "gosum"
+      "go",
+      "gomod",
+      "gowork",
+      "gosum"
     },
+    sync_install = false,
+    ignore_install = {},
+    auto_install = true,
+    modules = {},
     incremental_selection = {
       enable = true,
       keymaps = {

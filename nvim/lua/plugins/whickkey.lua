@@ -17,7 +17,7 @@ return {
     local mappings = {
       ["1"] = { "<cmd>ToggleTerm<CR>", "Open Terminal" },
       ["2"] = { "<cmd>TransparentToggle<CR>", "Toggle background transparent" },
-      ["w"] = { "<cmd>update!<CR>", "Save" },
+      ["W"] = { "<cmd>update!<CR>", "Save" },
       ["q"] = { "<cmd>q!<CR>", "Quit" },
 
       a = {
@@ -65,6 +65,19 @@ return {
           "Link",
         },
         z = { "<cmd>lua require('utils.term').git_client_toggle()<CR>", "LazyGit" },
+        f = {
+          name = "Find",
+          f = { "<cmd>Telescope git_status<cr>", "Find Tracked File" },
+        }
+      },
+      w = {
+        name = "Window",
+        d = { "<cmd>q<CR>", "Delete window" },
+        v = { "<cmd>vs<CR>", "Split vertical window" },
+        h = { "<C-w>h", "Left" },
+        l = { "<C-w>l", "Right" },
+        j = { "<C-w>j", "Up" },
+        k = { "<C-w>k", "Down" },
       },
       u = {
         name = "Upload / Download",
@@ -158,7 +171,5 @@ return {
 
     whichkey.setup()
     whichkey.register(mappings, opts)
-
-    -- code_keymap()
   end,
 }
