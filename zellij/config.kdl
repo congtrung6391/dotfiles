@@ -344,7 +344,7 @@ copy_command "pbcopy"                     // osx
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
 //
-scrollback_editor "/opt/nvim-linux64/bin/nvim"
+scrollback_editor "/snap/bin/nvim"
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)

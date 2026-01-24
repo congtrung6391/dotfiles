@@ -7,3 +7,8 @@ size = 13
 
 normal = { family = "ComicShannsMono Nerd Font", style = "Regular" }
 bold = { family = "ComicShannsMono Nerd Font", style = "Bold" }
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "x1b\r"
