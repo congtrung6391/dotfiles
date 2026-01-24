@@ -118,7 +118,7 @@ function M.setup()
         cmp.config.compare.order,
       },
     },
-  }
+  })
 
   -- Use completion in command-line mode
   cmp.setup.cmdline('/', {
