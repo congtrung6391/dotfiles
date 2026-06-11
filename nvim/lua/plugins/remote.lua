@@ -4,4 +4,5 @@ return {
   event = "VeryLazy",
   cmd = { "TransferInit", "DiffRemote", "TransferUpload", "TransferDownload", "TransferDirDiff", "TransferRepeat" },
   opts = {},
+  enabled = false,
 }

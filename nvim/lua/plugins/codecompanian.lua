@@ -48,7 +48,7 @@ return {
       },
       strategies = {
         chat = {
-          adapter = "gemini_cli",
+          adapter = "qwen2.5-coder:7b",
           keymaps = {
             send = {
               modes = { n = '<CR>', i = '<S-CR>' },
@@ -63,7 +63,7 @@ return {
           }
         },
         inline = {
-          adapter = "qwen2.5-coder",
+          adapter = "qwen2.5-coder:7b",
           keymaps = {
             accept_change = {
               modes = { n = "gDa" }, -- Remember this as DiffAccept
@@ -117,16 +117,16 @@ return {
           end,
         },
         http = {
-          ['qwen2.5-coder'] = function()
+          ['qwen2.5-coder:7b'] = function()
             return require("codecompanion.adapters").extend("ollama", {
-              name = "qwen2.5-coder-codecompanian", -- Give this adapter a different name to differentiate it from the default ollama adapter
+              name = "qwen2.5-coder:7b",
               opts = {
                 vision = true,
                 stream = true,
               },
               schema = {
                 model = {
-                  default = "qwen2.5-coder:1.5b",
+                  default = "qwen2.5-coder:7b",
                 },
                 num_ctx = {
                   default = 16384,
@@ -135,7 +135,7 @@ return {
                   default = false,
                 },
                 keep_alive = {
-                  default = "5m",
+                  default = "10m",
                 },
               },
             })

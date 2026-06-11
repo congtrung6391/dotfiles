@@ -38,7 +38,7 @@ return {
               cond = gps.is_available,
               color = { fg = "#f3ca28" },
             },
-            { 'lsp_progress' }
+            -- { 'lsp_progress' }
           },
           lualine_x = {
             {
