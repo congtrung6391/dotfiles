@@ -21,6 +21,7 @@ return {
     'tzachar/cmp-ai',
     dependencies = 'nvim-lua/plenary.nvim',
     ft = { "markdown", "javascript", "javascriptreact", "typescript", "typescriptreact", "go" },
+    enabled = true,
     config = function()
       local cmp_ai = require('cmp_ai.config')
 
@@ -28,24 +29,26 @@ return {
         max_lines = 100,
         provider = 'Ollama',
         provider_options = {
-          -- auto_unload = false, -- Set to true to automatically unload the model when
-          -- exiting nvim.
+          auto_unload = true,
 
           -- model = 'codegemma:2b-code',
           -- prompt = function(lines_before, lines_after)
           --   return lines_before
           -- end,
 
-          model = 'qwen2.5-coder:0.5b',
+          -- model = 'deepseek-coder:6.7b-base',
+          -- prompt = function(lines_before, lines_after)
+          --   return "<|fim_prefix|>" .. lines_before .. "<|fim_suffix|>" .. lines_after .. "<|fim_middle|>"
+          -- end,
+
+          model = 'qwen2.5-coder:3b-base',
           prompt = function(lines_before, lines_after)
-            -- You may include filetype and/or other project-wise context in this string as well.
-            -- Consult model documentation in case there are special tokens for this.
             return "<|fim_prefix|>" .. lines_before .. "<|fim_suffix|>" .. lines_after .. "<|fim_middle|>"
           end,
 
-          suffix = function(lines_after)
-            return lines_after
-          end,
+          -- suffix = function(lines_after)
+          --   return lines_after
+          -- end,
 
           -- raw_response_cb = function(response)
           --   -- the `response` parameter contains the raw response (JSON-like) object.
@@ -53,11 +56,11 @@ return {
           --   vim.g.ai_raw_response = response  -- store the raw response in a global
           -- end,
         },
-        -- notify = true,
-        -- notify_callback = function(msg)
-        --   vim.notify(msg)
-        -- end,
-        -- log_errors = true,
+        notify = true,
+        notify_callback = function(msg)
+          vim.notify(msg)
+        end,
+        log_errors = true,
         run_on_every_keystroke = false,
         max_timeout_seconds = 10,
       })

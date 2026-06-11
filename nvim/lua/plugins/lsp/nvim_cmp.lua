@@ -23,7 +23,7 @@ function M.setup()
     sources = cmp.config.sources({
       -- { name = "copilot",  priority = 1 },
       -- { name = "avante",   pritory = 1 },
-      { name = "cmp_ai",   pritory = 1 },
+      -- { name = "cmp_ai",   pritory = 1 },
       { name = "nvim_lsp", priority = 2 },
       { name = "path",     priority = 3 },
       { name = "buffer",   priority = 4 },
@@ -78,6 +78,16 @@ function M.setup()
           fallback()
         end
       end, { "i", "s" }),
+
+      ['<C-x>'] = cmp.mapping(function(fallback)
+        cmp.mapping.complete({
+          config = {
+            sources = cmp.config.sources({
+              { name = 'cmp_ai' },
+            }),
+          },
+        })
+      end, { "i" }),
     },
     formatting = {
       fields = { "abbr", "kind", "menu" },
@@ -87,8 +97,7 @@ function M.setup()
         ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
         symbol_map = {
           Copilot = "",
-          cmp_ai = "",
-          avante = "",
+          Ollama = "",
         }
       },
     },
@@ -118,7 +127,7 @@ function M.setup()
         cmp.config.compare.order,
       },
     },
-  }
+  })
 
   -- Use completion in command-line mode
   cmp.setup.cmdline('/', {
