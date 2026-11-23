@@ -45,12 +45,13 @@ return {
 
       f = {
         name = "Find",
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        h = { "<cmd>Telescope find_files hidden=true no_ignore=true<cr>", "Find Hidden File" },
         b = { "<cmd>Telescope buffers<cr>", "Buffers" },
-        g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
         c = { "<cmd>Telescope commands<cr>", "Commands" },
+        d = { "<cmd>DiffviewToggleFiles<cr>", "Diff main file explorer" },
         e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+        f = { "<cmd>Telescope find_files<cr>", "Find File" },
+        g = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
+        h = { "<cmd>Telescope find_files hidden=true no_ignore=true<cr>", "Find Hidden File" },
         p = { "<cmd>Telescope projects<cr>", "Projects" },
         s = { "<cmd>Telescope grep_string<cr>", "Grep String" },
         r = { "<cmd>Spectre<cr>", "Replace in file" },
@@ -59,6 +60,8 @@ return {
 
       g = {
         name = "Git",
+        c = { "<cmd>DiffviewFileHistory %<cr>", "File change history" },
+        d = { "<cmd>DiffviewOpen origin/main...HEAD --imply-local<cr>", "Diff main file explorer" },
         h = { "GitSigns Hunk" },
         y = {
           "<cmd>lua require'gitlinker'.get_buf_range_url('v', {action_callback = require'gitlinker.actions'.open_in_browser})<cr>",
@@ -70,6 +73,7 @@ return {
           f = { "<cmd>Telescope git_status<cr>", "Find Tracked File" },
         }
       },
+
       w = {
         name = "Window",
         d = { "<cmd>q<CR>", "Delete window" },

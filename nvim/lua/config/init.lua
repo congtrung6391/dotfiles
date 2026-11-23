@@ -3,6 +3,7 @@ require('config.keymaps')
 require('config.keymenu')
 require('config.options')
 require('config.icons')
+require("utils.mermaid").setup()
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

@@ -366,3 +366,14 @@ scrollback_editor "/usr/local/bin/nvim"
 // Default: true
 //
 // styled_underlines false
+theme_dark "kanagawa"
+theme_light "ayu-light"
+explicit_theme_hue "dark"
+show_startup_tips false
+focus_follows_mouse true
+terminal {
+    font "ComicShannsMono Nerd Font"
+    font_size 14
+    opacity 0.75
+    opacity_applies_to "background"
+}
